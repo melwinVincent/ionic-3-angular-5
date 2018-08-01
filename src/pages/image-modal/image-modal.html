@@ -1,0 +1,39 @@
+<ion-header class="ttct-header ttct-modal">
+  <div class="ttct-pseudo-toolbar title ttct-border-radius-8">
+    <div class="title-ios ttct-center" [innerHTML] = "'REQUEST.pinch' | translate"></div>
+  </div>
+  <button ion-button class="ttct-round-btn-right ttct-no-bg" (click)="closeModal(false)" icon-only>
+      <ion-icon name="ios-close"></ion-icon>
+  </button>
+</ion-header>
+<ion-content padding class="ttct-border-radius-8">
+  <ion-slides  zoom="true" pager="true" paginationType="bullets" centeredSlides="true" class="ttct-initial-direction" effect="coverflow" initialSlide="{{initialSlide}}">
+      <ion-slide *ngFor="let img of items; let index = index">
+          <!--<ion-scroll class="H-100" scrollX="true" scrollY="true" zoom="true">-->
+          <img [src]="img" alt="Company logo"/>
+          <!--<button ion-button class="ttct-round-btn" (click)="deleteImg(index)" icon-only>
+              <ion-icon name="ios-trash"></ion-icon>
+          </button>-->
+          <!--</ion-scroll>-->
+      </ion-slide>
+  </ion-slides>
+</ion-content>
+<ion-footer>
+  <div class="ttct-pseudo-toolbar footer ttct-border-radius-8">
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col class="ttct-pseudo-btn ttct-left-btn">
+        <button ion-button (click)="closeModal(true)">
+          {{'REQUEST.attachImg' | translate}}
+        </button>
+      </ion-col>
+      <ion-col class="ttct-pseudo-btn ttct-right-btn">
+        <button ion-button (click)="deleteImg()">
+          {{'REQUEST.removeImg' | translate}}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+</ion-footer>
+

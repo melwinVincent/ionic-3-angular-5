@@ -1,0 +1,100 @@
+.ttct-service {
+    service-modal {
+
+        width: calc(100% - 16px);
+        height: calc(100% - 110px);
+        margin-left: 8px;
+        margin-top: 60px;
+        border: 1px solid color($colors, color-V, base);
+        border-radius: 8px;
+        
+        .ttct-modal-label-wrapper {
+            width: calc(100% - 48px);
+            display: inline-block;
+            vertical-align: middle;
+            overflow: scroll;
+        }
+        .ttct-modal-button-wrapper {
+            display: inline-block;
+            width: 40px;
+            vertical-align: middle;
+            text-align: center;
+            .ttct-round-button {
+                height: 24px;
+                width: 24px;
+                background: none;
+                border: 1px solid color($colors, color-I, base);
+                box-shadow: none;
+                ion-icon {
+                    color : color($colors, color-III, base);
+                    font-size: 32px;
+                }
+
+                &.sub-items {
+                    border : none;
+                    ion-icon {
+                        font-size : 24px;
+                    }
+                }
+            }
+        }
+        .main-wrapper {
+            padding: 8px 8px;
+            background: none;
+            width: 100%;
+            text-align: initial;
+            font-size: 15px;
+            color : color($colors, color-III, base);
+            &.selected-item {
+                font-weight: bold;
+                color : color($colors, primary, base);
+                .ttct-round-button {
+                    border: 1px solid color($colors, primary, base);
+                    &.sub-items {
+                        border : none;
+                    }
+                    ion-icon {
+                        color: color($colors, primary, base);
+                    }
+                }
+            }
+            &.no-sub-items {
+                padding: 8px 8px;
+            }
+        }
+        .sub-list {
+            .item-ios.item-block .item-inner {
+                padding-right: 0px; 
+            }
+            .sub-list-wrapper {
+                width: calc(100% - 24px);
+                background: none;
+                text-align: initial;
+                font-size: 15px;
+                color : color($colors, color-III, base);
+                &.selected-item {
+                    font-weight: bold;
+                    color : color($colors, primary, base);
+                    .ttct-round-button {
+                        border: 1px solid color($colors, primary, base);
+                        ion-icon {
+                            color: color($colors, primary, base);
+                        }
+                    }
+                }
+            }
+            margin : 0px;
+            height: auto;
+            ion-label {
+                color : color($colors, color-III, base);
+                .ttct-modal-label-wrapper {
+                    font-size: 14px;
+                }
+            }
+            
+        }
+        ion-label.label {
+            margin : 0px;
+        }
+    }
+}

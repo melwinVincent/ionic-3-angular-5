@@ -1,0 +1,15 @@
+<ion-content padding>
+  <div class="ttct-landing-wrapper">
+    <div class="ttct-app-icon">
+      <img id="logo" [src]="'./assets/imgs/logo.png'" alt="Company logo" />
+    </div>
+    <ion-row class="ttct-initial-direction ttct-std-buttons">
+      <ion-col>
+          <button ion-button (click)="changeLanguage('en')">English</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button (click)="changeLanguage('ar')">العربية</button>
+      </ion-col>
+    </ion-row>  
+  </div>
+</ion-content>

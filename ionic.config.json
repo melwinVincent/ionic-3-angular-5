@@ -1,0 +1,12 @@
+{
+  "name": "helloWorld-ionic2",
+  "app_id": "",
+  "v2": true,
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/serviceapp/api/",
+      "proxyUrl": "http://192.168.90.235:8013/"
+    }
+  ]
+}

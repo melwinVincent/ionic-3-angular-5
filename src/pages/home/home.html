@@ -1,0 +1,30 @@
+<ion-header class="ttct-header">
+
+ 
+
+  <ion-navbar>
+    <!--force ios-design for title-->
+    <ion-title class="title-ios ttct-center">Jawab</ion-title>
+  </ion-navbar>
+
+  <button class="ttct-logout-btn-left" ion-button icon-only (click)="logout()">
+    <ion-icon name="ios-power"></ion-icon>
+  </button>
+
+  <button *ngIf="language === 'ar'" class="ttct-lang-btn-right" ion-button icon-only (click)="changeLanguage('en')">
+    <ion-icon name="ios-heart-outline"></ion-icon>
+  </button>
+  <button *ngIf="language === 'en'"  class="ttct-lang-btn-right" ion-button icon-only (click)="changeLanguage('ar')">
+    <ion-icon name="ios-heart"></ion-icon>
+  </button>
+  <button menuToggle ion-button icon-only class="ttct-menu-btn-right">
+      <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-header>
+<ion-content padding class="ttct-content">
+  <ion-tabs class="ttct-tabs" selectedIndex="0" tabsPlacement="top" tabsLayout="icon-top" tabsHighlight=true>
+    <ion-tab [root]="tab1Root" tabIcon="water" tabTitle="Create Request"></ion-tab>
+    <ion-tab [root]="tab2Root" tabIcon="person" tabTitle="View Responses"></ion-tab>
+    <ion-tab [root]="tab3Root" tabIcon="ios-analytics" tabTitle="Request History"></ion-tab>
+  </ion-tabs>
+</ion-content>

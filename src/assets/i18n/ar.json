@@ -1,0 +1,56 @@
+{
+  "HELLO": "مرحبا",
+  "COMMON" : {
+    "submit" : "أرسل",
+    "changeLanguage" : "انقر لتغيير اللغة",
+    "username" : "اسم المستخدم",
+    "password" : "كلمة المرور",
+    "register" : "سجل",
+    "forgotPassword" : "هل نسيت كلمة المرور",
+    "email" : "البريد الإلكتروني",
+    "gsm" : "رقم الهاتف النقال",
+    "name" :"الاسم",
+    "OK" : "موافق",
+    "CANCEL" : "إلغاء",
+    "CLOSE" : "اغلق",
+    "noInternet" : "لا يوجد اتصال بالإنترنت",
+    "removeImg" : "Remove this Image AR"
+  },
+  "REGISTER" : {
+    "register" : "سجل",
+    "noAccount" : "Don't have an account yet AR",
+    "clickRegister" : "Click on the Register button to create a new account AR",
+    "fillupDetails" : "Please fillup your details to register AR",
+    "confirmPassword" : "تأكيد كلمة المرور"
+  },
+  "OTP" : {
+    "enterOTP" : "أدخل كلمة المرور لمرة واحدة",
+    "resendOTP" : "إعادة إرسال رمز التأكيد السري",
+    "seconds" : "secondsAR",
+    "info" : "سيصلك رمز سري لمرة واحدة  للتأكيد.",
+    "enterMobile" : "يرجى إدخال رقم هاتفك النقال المكون من 8 أرقام",
+    "resendBtnDisableInfo" : "You can click resend button after AR"
+  },
+  "REQUEST" : {
+    "serviceTypePlaceholder" : "Click to select the service type AR",
+    "serviceTypeLabel" : "Service Type AR",
+    "description" : "Description AR",
+    "descriptionPlaceholder" : "Please enter a short description on the expected service AR",
+    "chooseLocation": "Choose the location where you want the service AR",
+    "defaultLocation":"Default is set to current location AR",
+    "viewLocation":"Click to view the selected location in map AR",
+    "current": "Current Location AR",
+    "base": "Base Location AR",
+    "map": "Choose from Map AR",
+    "selectService": "Select the type of Service AR",
+    "dragMarker": "Drag the marker to set the location AR",
+    "submitRequest" : "Submit Request AR",
+    "attachImg" : "Attach Images AR",
+    "chooseDate" : "Choose the date and time for your service AR",
+    "showImages" : "Click to view attached Images AR",
+    "pinch" : "Pinch to zoom the Image AR",
+    "view" : "View AR",
+    "currentLoc" : "Your Current Location AR",
+    "regLoc" : "Your Registered Location AR"
+  }
+}

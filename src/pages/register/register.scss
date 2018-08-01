@@ -1,0 +1,56 @@
+page-register {
+
+    .register-submit-button-wrapper {
+        padding: 10px;
+        text-align: center;
+        button {
+            width : 100px;
+        }
+    }
+
+    .ttct-location-wrapper {
+        .ttct-page-location-label {
+            background: none;
+            box-shadow: none;
+            color: color($colors, primary, base);
+            font-size: 15px;
+            text-transform: initial;
+            font-weight: normal;
+            width: 100%;
+            padding: 0px 0px;
+            height: 56px;
+            margin: 0px;
+            .button-inner {
+                display: block;
+                .ttct-btn-label {
+                    text-align: initial;
+                }
+            }
+        }
+        .ttct-labels {
+            background: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            color: #d1301a;
+            font-size: 15px;
+            text-transform: initial;
+            font-weight: normal;
+            width: 100%;
+            padding: 8px;
+        }
+    }
+    .ttct-page-label {
+        padding: 8px 2px;
+        color: color($colors, primary, base);
+    }
+    .list {
+        padding: 0px 8px;
+        border: 1px solid color($colors, light, base);
+        border-radius: 8px;
+        margin : 0px;
+        .label {
+            font-size: 14px;
+        }
+    }
+
+}

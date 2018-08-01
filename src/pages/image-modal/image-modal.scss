@@ -1,0 +1,30 @@
+.ttct-service {
+    page-image-modal {
+        width: calc(100% - 16px);
+        height: calc(100% - 16px);
+        margin-left: 8px;
+        margin-top: 8px;
+        border: 1px solid color($colors, color-V, base);
+        border-radius: 8px;
+        .ttct-round-btn-right ion-icon {
+            font-size: 32px;
+        }
+        .ttct-round-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+        ion-slide {
+            background : color($colors, light-I, base);
+        }
+        .slide-zoom {
+            height : 100%;
+        }
+        ion-scroll {
+            height: 100%;
+        }
+    }
+}

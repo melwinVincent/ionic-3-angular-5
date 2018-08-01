@@ -1,0 +1,34 @@
+login-page {
+    .register-wrapper {
+        box-shadow: 0 0 16px 0 #ccc;
+        margin: 26px 0px;
+        padding: 10px;
+        button {
+            width : 100px;
+        }
+    }
+    .ttct-label-body {
+        color : color($colors, color-IV, base);
+    }
+    .ttct-label-head {
+        font-weight: bold;
+        color: color($colors, primary, base);
+        padding: 0px 0px;
+    }
+    .lang-button-wrapper {
+        position: absolute;
+        top: 2px;
+        right: 8px;
+    }
+    .login-submit-button-wrapper {
+        padding: 10px;
+        text-align: center;
+        button {
+            width : 100px;
+        }
+    }
+    .register-button { 
+        width : 80px;
+        height : 32px;
+    }
+}

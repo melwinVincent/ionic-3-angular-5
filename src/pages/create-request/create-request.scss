@@ -1,0 +1,91 @@
+page-create-request {
+    .ttct-page-label {
+        padding: 8px 2px;
+        color: color($colors, primary, base);
+    }
+    .list {
+        padding: 0px 8px;
+        border: 1px solid color($colors, light, base);
+        border-radius: 8px;
+        margin : 0px;
+        .label {
+            font-size: 14px;
+        }
+    }
+    .req-pseudo-btn-wrapper {
+        .button {
+            background: color($colors, light, base);
+            color: color($colors, primary, base);
+            width: 132px;
+        }
+    }
+    // .ttct-service-type-button {
+    //     background: none;
+    //     box-shadow: none;
+    //     color: color($colors, primary, base);
+    //     font-size: 15px;
+    //     text-transform: initial;
+    //     font-weight: normal;
+    //     width: 100%;
+    //     padding: 8px;
+    //     .button-inner {
+    //         justify-content: left;
+    //     }
+    // }
+    .ttct-pseudo-button {
+        ion-icon {
+            top : 14px; 
+            z-index: -1;
+            &.ttct-view-icon {
+                font-size: 28px;
+                top: 9px;
+            }
+        }
+        .button {
+            background: none;
+            box-shadow: none;
+            color: color($colors, primary, base);
+            font-size: 15px;
+            text-transform: initial;
+            font-weight: normal;
+            width: 100%;
+            padding: 8px;
+            .ttct-btn-label {
+                width: 100%;
+                text-align: initial;
+            }
+        }
+        
+    }
+    .ttct-location-wrapper {
+        .ttct-page-location-label {
+            background: none;
+            box-shadow: none;
+            color: color($colors, primary, base);
+            font-size: 15px;
+            text-transform: initial;
+            font-weight: normal;
+            width: 100%;
+            padding: 0px 0px;
+            height: 56px;
+            margin: 0px;
+            .button-inner {
+                display: block;
+                .ttct-btn-label {
+                    text-align: initial;
+                }
+            }
+        }
+        .ttct-labels {
+            background: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            color: #d1301a;
+            font-size: 15px;
+            text-transform: initial;
+            font-weight: normal;
+            width: 100%;
+            padding: 8px;
+        }
+    }
+}

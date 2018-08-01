@@ -1,0 +1,67 @@
+<ion-header class="ttct-header ttct-modal">
+  <div class="ttct-pseudo-toolbar title ttct-border-radius-8">
+    <div class="title-ios ttct-center" [innerHTML] = "'REQUEST.selectService' | translate"></div>
+  </div>
+  <!--<button ion-button class="ttct-round-btn-right ttct-no-bg" (click)="closeModal()" icon-only>
+      <ion-icon name="ios-close"></ion-icon>
+  </button>-->
+</ion-header>
+<ion-content padding class="ttct-border-radius-8">
+  <ion-list>
+    <ion-item *ngFor="let item of items; let index = index">
+      
+      <button class="main-wrapper" [ngClass]="{'no-sub-items' : item.SubService.length === 0, 'selected-item' : selectedItemID === item.service_id || parentItemID === item.service_id}" (click)="itemClicked(item)">
+        
+        <div class="ttct-modal-label-wrapper" [innerHTML]="item.service_name"></div>
+        
+        <div class="ttct-modal-button-wrapper" *ngIf="item.SubService.length === 0">
+          <div class="ttct-round-button" ion-button icon-only>
+            <ion-icon *ngIf="selectedItemID === item.service_id" name="ios-checkmark"></ion-icon>
+          </div>
+        </div>
+        
+        <div class="ttct-modal-button-wrapper" *ngIf="item.SubService.length > 0">
+          <div class="ttct-round-button sub-items" ion-button icon-only>
+            <ion-icon [hidden]="item.openSublist" name="ios-arrow-down"></ion-icon>
+            <ion-icon [hidden]="!item.openSublist" name="ios-arrow-up"></ion-icon>
+          </div>
+        </div>
+        
+      </button>
+
+      <ion-list *ngIf="item.SubService.length > 0 && item.openSublist" class="sub-list">
+
+        <ion-item *ngFor="let subItem of item.SubService">
+          <button [ngClass]="{'selected-item' : selectedItemID === subItem.service_id}" class="sub-list-wrapper" (click)="itemClicked(subItem, item.service_id)">
+            <div class="ttct-modal-label-wrapper" [innerHTML]="subItem.service_name"></div>
+            <div class="ttct-modal-button-wrapper">
+              <div class="ttct-round-button" ion-button icon-only>
+                <ion-icon *ngIf="selectedItemID === subItem.service_id" name="ios-checkmark"></ion-icon>
+              </div>
+            </div>
+          </button>
+        </ion-item>
+      </ion-list>
+      
+      
+    </ion-item>
+</ion-list>
+</ion-content>
+<ion-footer>
+  <div class="ttct-pseudo-toolbar footer ttct-border-radius-8">
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col class="ttct-pseudo-btn ttct-left-btn">
+        <button ion-button (click)="closeModal(true)">
+          {{'COMMON.CLOSE' | translate}}
+        </button>
+      </ion-col>
+      <ion-col class="ttct-pseudo-btn ttct-right-btn">
+        <button ion-button (click)="closeModal(false)">
+          {{'COMMON.OK' | translate}}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+</ion-footer>

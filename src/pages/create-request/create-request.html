@@ -1,0 +1,93 @@
+<ion-content padding>
+    <form [formGroup]="requestFormGroup" class="ttct-form" (ngSubmit)="onRequestSubmit()" #requestForm="ngForm">
+        <!--service type-->
+        <div class="ttct-relative">
+            <div class="ttct-page-label" [innerHTML]="'REQUEST.serviceTypeLabel' | translate"></div>
+            <div no-padding class="ttct-pseudo-button ttct-force-rtl">
+                <button  ion-button type="button" (click)="getServiceTypes()" class="ttct-service-type-button">
+                    <ion-input name="service" formControlName="service" class="ttct-btn-label" *ngIf="createReqObj.service_id; else placeholder" [(ngModel)]="createReqObj.service_name" readonly="true"></ion-input>
+                    <ng-template #placeholder><div class="ttct-btn-label" [innerHTML]="'REQUEST.serviceTypePlaceholder' | translate"></div></ng-template>
+                </button>
+                <ion-icon name="ios-arrow-down"></ion-icon>
+            </div>
+        </div>
+        <!--description-->
+        <div class="ttct-relative">
+            <div class="ttct-page-label" [innerHTML]="'REQUEST.description' | translate"></div>
+            <ion-textarea my-input class="ttct-textarea" placeholder="{{'REQUEST.descriptionPlaceholder'| translate}}" 
+            [(ngModel)]="createReqObj.description" rows="4" name="description" formControlName="description" minlength="5" maxlength="200" ></ion-textarea>
+        </div>
+
+        <!--set date & time-->
+        <div class="ttct-relative PTB-8">
+            <div class="ttct-page-label" [innerHTML]="'REQUEST.chooseDate' | translate"></div>
+            <ion-grid no-padding class="req-pseudo-btn-wrapper">
+                <ion-row class="ttct-center">
+                    <ion-col class="ttct-pseudo-btn ttct-left-btn">
+                        <button ion-button type="button" (click)="datepicker()">
+                        {{createReqObj.required_date}}
+                        </button>
+                    </ion-col>
+                    <ion-col class="ttct-pseudo-btn ttct-right-btn">
+                        <button ion-button type="button" (click)="updateTimeBlock()">
+                        {{createReqObj.time_mode_display}}
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+
+        <!--set marker-->
+        <div class="ttct-relative">
+            <div class="ttct-location-wrapper">
+                <button class="ttct-page-location-label" type="button" ion-button (click)="viewLocation()">
+                    <div class="ttct-page-label ttct-btn-label" [innerHTML]="'REQUEST.chooseLocation' | translate"></div>
+                    <div class="ttct-light-IV ttct-italics ttct-btn-label F-12">
+                        (<span [innerHTML]="'REQUEST.viewLocation' | translate"></span>)
+                    </div>
+                </button>
+            </div>
+            <ion-list radio-group>
+            <ion-item>
+                <ion-label>{{'REQUEST.current' | translate}}</ion-label>
+                <ion-radio value="CURRENT" checked (ionSelect)="openMap('CURRENT')"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>{{'REQUEST.base' | translate}}</ion-label>
+                <ion-radio value="BASE" (ionSelect)="openMap('BASE')"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>{{'REQUEST.map' | translate}}</ion-label>
+                <ion-radio value="MAP" (ionSelect)="openMap('MAP')"></ion-radio>
+            </ion-item>
+            </ion-list>
+        </div>
+    </form>
+    <div class="PTB-8" *ngIf="createReqObj.image.length > 0">
+        <div no-padding class="ttct-pseudo-button">
+            <button  ion-button type="button" (click)="showImages()" class="ttct-service-type-button">
+                <div class="ttct-btn-label"  [innerHTML]="'REQUEST.showImages' | translate"></div>
+            </button>
+            <ion-icon class="ttct-view-icon" name="ios-eye"></ion-icon>
+        </div>
+    </div>
+
+</ion-content>
+<ion-footer>
+  <div class="ttct-pseudo-toolbar footer primary">
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col class="ttct-pseudo-btn ttct-left-btn">
+        <button ion-button type="button" (click)="presentImgActionSheet()">
+          {{'REQUEST.attachImg' | translate}}
+        </button>
+      </ion-col>
+      <ion-col class="ttct-pseudo-btn ttct-right-btn">
+        <button type="button" (click)="submitRequest()" ion-button [disabled]="!requestForm.valid">
+          {{'REQUEST.submitRequest' | translate}}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+</ion-footer>

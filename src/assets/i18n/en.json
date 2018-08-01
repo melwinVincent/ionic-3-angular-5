@@ -1,0 +1,56 @@
+{
+  "HELLO": "hello",
+  "COMMON" : {
+    "submit" : "Submit",
+    "changeLanguage" : "Click to change the language",
+    "username" : "Username",
+    "password" : "Password",
+    "register" : "Register",
+    "forgotPassword" : "Forgot Password",
+    "email" : "Email",
+    "gsm" : "GSM",
+    "name" : "Name",
+    "OK" : "OK",
+    "CANCEL" : "CANCEL",
+    "CLOSE" : "CLOSE",
+    "noInternet" : "No Internet Connection"
+  },
+  "REGISTER" : {
+    "register" : "Register",
+    "noAccount" : "Don't have an account yet",
+    "clickRegister" : "Click on the Register button to create a new account",
+    "fillupDetails" : "Please fillup your details to register",
+    "confirmPassword" : "Confirm Password"
+  },
+  "OTP" : {
+    "enterOTP" : "Enter OTP",
+    "resendOTP" : "Resend OTP",
+    "seconds" : "seconds",
+    "info" : "You will receive a one time pin for verification.",
+    "enterMobile" : "Please enter your 8 digit mobile number",
+    "resendBtnDisableInfo" : "You can click resend button after"
+  },
+  "REQUEST" : {
+    "serviceTypePlaceholder" : "Click to select the service type",
+    "serviceTypeLabel" : "Service Type",
+    "description" : "Description",
+    "descriptionPlaceholder" : "Please enter a short description on the expected service",
+    "chooseLocation": "Update the service location",
+    "defaultLocation":"Default is set to current location",
+    "viewLocation":"Click here to view the selected location in map",
+    "current": "Current Location",
+    "base": "Registered Location",
+    "map": "Choose a different location from Map",
+    "selectService": "Select the type of Service",
+    "dragMarker": "Drag the marker to set the location",
+    "submitRequest" : "Submit Request",
+    "attachImg" : "Attach Images",
+    "removeImg" : "Remove this Image",
+    "chooseDate" : "Click to update the date and time for your service",
+    "showImages" : "Click to view attached Images",
+    "pinch" : "Pinch to zoom the Image",
+    "view" : "View",
+    "currentLoc" : "Your Current Location",
+    "regLoc" : "Your Registered Location"
+  }
+}

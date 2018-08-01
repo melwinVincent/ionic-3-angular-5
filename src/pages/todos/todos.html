@@ -1,0 +1,73 @@
+<ion-header class="ttct-header">
+  <ion-navbar>
+    <ion-title class="title-ios ttct-center">Todos Page</ion-title>
+  </ion-navbar>
+  <button menuToggle ion-button icon-only class="ttct-menu-btn-right">
+      <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-header>
+<ion-content padding class="ttct-app-content">
+  <div class="top-content" ion-fixed>
+    <ion-segment class="segment segment-ios" [(ngModel)]="todoSegment">
+        <ion-segment-button class="segment-button"  (click)="getItems('ALL')" role="button" tappable="" value="ALL" aria-pressed="false">
+          ALL
+        <div class="button-effect"></div></ion-segment-button>
+        <ion-segment-button class="segment-button" (click)="getItems('COMPLETED')" role="button" tappable="" value="COMPLETED" aria-pressed="false">
+          COMPLETED
+        <div class="button-effect"></div></ion-segment-button>
+        <ion-segment-button class="segment-button" (click)="getItems('PENDING')" role="button" tappable="" value="PENDING" aria-pressed="true">
+          PENDING
+        <div class="button-effect"></div></ion-segment-button>
+    </ion-segment>
+
+    <form [formGroup]="addTodoFormGroup" (ngSubmit)="onAddTodo()" #addTodoForm="ngForm">
+      <ion-grid no-padding>
+        <ion-row align-items-center>
+          <ion-col col-9 relative>
+            <ion-item>
+              <ion-label floating>Type your todo task</ion-label>
+              <ion-input class="ttct-force-rtl" type="text" name="todo" [(ngModel)]="todoObj.todo" formControlName="todo" maxlength="100"></ion-input>
+            </ion-item>
+            <ion-icon *ngIf="addTodoFormGroup.controls.todo.errors && addTodoFormGroup.controls.todo.errors.required && addTodoFormGroup.controls.todo.dirty" 
+            name="information-circle" class="ttct-error-info"
+            (click)="toast('This field is required')"></ion-icon>
+            <ion-icon *ngIf="addTodoFormGroup.controls.todo.errors && addTodoFormGroup.controls.todo.errors.maxlength && addTodoFormGroup.controls.todo.dirty" 
+            name="information-circle" class="ttct-error-info"
+            (click)="toast('should be less tha 8 characters')"></ion-icon>
+          </ion-col>
+          <ion-col col-3 text-center>
+            <button type="submit" [disabled]="!addTodoForm.valid" class="ttct-round-button" ion-button icon-only>
+              <ion-icon name="checkmark"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  
+  </div>
+
+  <!--<button ion-button block type="button" (click)="get('todosObservable')">Get Todos</button>-->
+  <!--add todo-->
+  
+
+  <ion-list >
+    <div class="no-items" *ngIf="todos && todos.length === 0">No items to display</div>
+    <div class="todo-item ttct-relative" *ngFor="let item of todos">
+      <div class="ttct-inline-block todo-toggle">
+        <ion-toggle [(ngModel)]="item.isDone" (ionChange)="toggled(item)"></ion-toggle>
+      </div>
+      <div class="ttct-inline-block todo-desc">
+        <div class="desc-wrapper">{{item.todo}}</div>
+      </div>
+      <div class="todo-delete" (click)="presentConfirm(item._id)">
+        <ion-icon name="ios-trash"></ion-icon>
+      </div>
+      <div class="todo-status">
+        <div *ngIf="item.isDone" class="status completed">COMPLETED</div>
+        <div *ngIf="!item.isDone" class="status pending">PENDING</div>
+      </div>
+    </div>
+  </ion-list>
+
+</ion-content>
+
