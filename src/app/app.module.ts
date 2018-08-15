@@ -19,6 +19,7 @@ import { TodosService } from '../services/todos.service';
 import { OTPService } from '../services/otp.service';
 import { LoginService } from '../services/login.service';
 import { CreateRequestService } from '../services/create-request.service';
+import { MyRequestService } from '../services/my-request.service';
 import { RequestHeaderService } from '../services/request.header.service';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -67,6 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
     OTPService,
     LoginService,
     CreateRequestService,
+    MyRequestService,
     RequestHeaderService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

@@ -23,8 +23,7 @@
 </ion-header>
 <ion-content padding class="ttct-content">
   <ion-tabs class="ttct-tabs" selectedIndex="0" tabsPlacement="top" tabsLayout="icon-top" tabsHighlight=true>
-    <ion-tab [root]="tab1Root" tabIcon="water" tabTitle="Create Request"></ion-tab>
-    <ion-tab [root]="tab2Root" tabIcon="person" tabTitle="View Responses"></ion-tab>
-    <ion-tab [root]="tab3Root" tabIcon="ios-analytics" tabTitle="Request History"></ion-tab>
+    <ion-tab [root]="tab1Root" tabIcon="water" tabTitle="{{reqLabel}}"></ion-tab>
+    <ion-tab [root]="tab2Root" tabIcon="person" tabTitle="My Requests"></ion-tab>
   </ion-tabs>
 </ion-content>

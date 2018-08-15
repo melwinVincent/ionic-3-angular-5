@@ -13,7 +13,8 @@
     "OK" : "OK",
     "CANCEL" : "CANCEL",
     "CLOSE" : "CLOSE",
-    "noInternet" : "No Internet Connection"
+    "noInternet" : "No Internet Connection",
+    "noItems" : "No items to display"
   },
   "REGISTER" : {
     "register" : "Register",
@@ -51,6 +52,24 @@
     "pinch" : "Pinch to zoom the Image",
     "view" : "View",
     "currentLoc" : "Your Current Location",
-    "regLoc" : "Your Registered Location"
+    "regLoc" : "Your Registered Location",
+    "updateRequest" : "Update Request",
+    "selectDate" : "SELECT DATE",
+    "selectTime" : "SELECT TIME"
+  },
+  "MY_REQUEST" : {
+    "clickLabel" : "Click the arrow to manage your request",
+    "clickToView" : "Click to view ",
+    "responses" : " responses",
+    "response" : " response",
+    "details" : "Details",
+    "requestID" : "Request ID",
+    "requestType" : "Service Type",
+    "location" : "Click to view the service location",
+    "images" : "Click to view the attached images",
+    "contactName" : "Contact",
+    "contactGSM" : "GSM",
+    "editRequest" : "Edit Request",
+    "deleteRequest" : "Delete Request"
   }
 }

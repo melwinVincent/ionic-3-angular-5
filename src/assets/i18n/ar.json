@@ -14,7 +14,8 @@
     "CANCEL" : "إلغاء",
     "CLOSE" : "اغلق",
     "noInternet" : "لا يوجد اتصال بالإنترنت",
-    "removeImg" : "Remove this Image AR"
+    "removeImg" : "Remove this Image AR",
+    "noItems" : "No items to display AR"
   },
   "REGISTER" : {
     "register" : "سجل",
@@ -51,6 +52,24 @@
     "pinch" : "Pinch to zoom the Image AR",
     "view" : "View AR",
     "currentLoc" : "Your Current Location AR",
-    "regLoc" : "Your Registered Location AR"
+    "regLoc" : "Your Registered Location AR",
+    "updateRequest" : "Update Request AR",
+    "selectDate" : "SELECT DATE AR",
+    "selectTime" : "SELECT TIME AR"
+  },
+  "MY_REQUEST" : {
+    "clickLabel" : "Click the arrow to manage your requestAR",
+    "clickToView" : "Click to viewAR ",
+    "responses" : " responsesAR",
+    "response" : " responseAR",
+    "details" : "DetailsAR",
+    "requestID" : "Request IDAR",
+    "requestType" : "Service TypeAR",
+    "location" : "Click to view the required service locationAR",
+    "images" : "Click to view the attached imagesAR",
+    "contactName" : "NameAR",
+    "contactGSM" : "GSMAR",
+    "editRequest" : "Edit RequestAR",
+    "deleteRequest" : "Delete RequestAR"
   }
 }

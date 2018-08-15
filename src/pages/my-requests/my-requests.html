@@ -1,0 +1,81 @@
+<ion-content padding>
+    <div *ngIf="items && items.length > 0; else noItems" class="ttct-click-label" ion-fixed>
+        <div [innerHTML]="'MY_REQUEST.clickLabel'| translate"></div>
+    </div>
+    <ng-template #noItems>
+        <div class="ttct-click-label no-items" ion-fixed>
+            <div [innerHTML]="'COMMON.noItems'| translate"></div>
+        </div>
+    </ng-template>
+    <ion-list>
+        <ion-item  *ngFor="let item of items; let index = index" class="ttct-relative">
+
+            <ion-grid no-padding class="ttct-top-grid">
+                <ion-row>
+                    <ion-col>
+                        <div class="ttct-title-icon-wrapper">
+                            <div *ngIf="item.Response_Count && item.Response_Count > 0" class="ttct-count-badge">{{item.Response_Count}}</div>
+                            <ion-icon name="ios-ionic"></ion-icon>
+                        </div>
+                        <div class="ttct-property-wrapper">
+                            <a (click)="details(item.service_request_id)" [innerHTML]="item.service_name"></a>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <ion-grid no-padding>
+                <ion-row>
+                    <ion-col>
+                        <div class="ttct-title-icon-wrapper">
+                            <ion-icon name="md-calendar"></ion-icon>
+                        </div>
+                        <div class="ttct-property-wrapper">
+                            <span [innerHTML]="item.required_date"></span>
+                        </div>
+                    </ion-col>
+                    <ion-col>
+                        <div class="ttct-title-icon-wrapper">
+                            <ion-icon name="md-timer"></ion-icon>
+                        </div>
+                        <div class="ttct-property-wrapper">
+                            <span [innerHTML]="item.time_mode"></span>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <ion-grid no-padding *ngIf="item.Response_Count && item.Response_Count > 0">
+                <ion-row>
+                    <ion-col>
+                        <div class="ttct-title-icon-wrapper">
+                            <ion-icon name="download"></ion-icon>
+                        </div>
+                        <div class="ttct-property-wrapper">
+                            <span [innerHTML]="'MY_REQUEST.clickToView' | translate"></span><span [innerHTML]="item.Response_Count"></span><span *ngIf="item.Response_Count === 1" [innerHTML]="'MY_REQUEST.response' | translate"></span><span *ngIf="item.Response_Count > 1" [innerHTML]="'MY_REQUEST.responses' | translate"></span>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <div class="ttct-created-date" [innerHTML]="item.crtd_dt"></div>
+            <ion-fab [hidden]="language === 'ar'" right middle>
+                <button ion-fab mini color="primary"><ion-icon name="ios-arrow-back-outline"></ion-icon></button>
+                <ion-fab-list side="left">
+                    <button (click)="deleteRequest(item.service_request_id)" ion-fab color="danger"><ion-icon name="trash"></ion-icon></button>
+                    <button (click)="editRequest(item.service_request_id, false)" ion-fab color="secondary"><ion-icon name="ios-create"></ion-icon></button>
+                    <button (click)="details(item.service_request_id)" ion-fab color="ionic"><ion-icon name="ios-eye"></ion-icon></button>
+                </ion-fab-list>
+            </ion-fab>
+
+            <ion-fab [hidden]="language === 'en'" left middle>
+                <button ion-fab mini color="primary"><ion-icon name="ios-arrow-forward-outline"></ion-icon></button>
+                <ion-fab-list side="right">
+                    <button (click)="deleteRequest(item.service_request_id)" ion-fab color="danger"><ion-icon name="trash"></ion-icon></button>
+                    <button (click)="editRequest(item.service_request_id, false)" ion-fab color="secondary"><ion-icon name="ios-create"></ion-icon></button>
+                    <button (click)="details(item.service_request_id)" ion-fab color="ionic"><ion-icon name="ios-eye"></ion-icon></button>
+                </ion-fab-list>
+            </ion-fab>
+
+        </ion-item>
+    </ion-list>
+</ion-content>

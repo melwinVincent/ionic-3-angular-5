@@ -1,0 +1,45 @@
+<ion-header class="ttct-header">
+  <ion-navbar>
+    <ion-title class="title-ios ttct-center">Confirm OTP</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+    <div class="ttct-app-icon">
+      <img id="logo" [src]="'./assets/imgs/logo.png'" alt="Company logo" />
+    </div>
+
+    <div class="ttct-center ttct-light-IV ttct-italics" [innerHTML]="'OTP.info' | translate"></div>
+
+    <form [formGroup]="confirmOTPFormGroup" class="ttct-form" (ngSubmit)="onconfirmOTPFormSubmit()" #confirmOTPForm="ngForm">
+      <div class="ttct-relative">
+        <ion-item>
+          <ion-input [placeholder] = "'OTP.enterOTP' | translate" class="ttct-force-center" type="tel" name="otp" [(ngModel)]="otp" formControlName="otp" minlength="4" maxlength="4"></ion-input>
+        </ion-item>
+
+        <ion-icon *ngIf="confirmOTPFormGroup.controls.otp.errors && confirmOTPFormGroup.controls.otp.errors.required && confirmOTPFormGroup.controls.otp.dirty" 
+        name="information-circle" class="ttct-error-info"
+        (click)="toast('This field is required')"></ion-icon>
+        <ion-icon *ngIf="confirmOTPFormGroup.controls.otp.errors && confirmOTPFormGroup.controls.otp.errors.minlength && confirmOTPFormGroup.controls.otp.dirty" 
+        name="information-circle" class="ttct-error-info"
+        (click)="toast('should be 8 digits')"></ion-icon>
+        <ion-icon *ngIf="confirmOTPFormGroup.controls.otp.errors && confirmOTPFormGroup.controls.otp.errors.maxlength && confirmOTPFormGroup.controls.otp.dirty" 
+        name="information-circle" class="ttct-error-info"
+        (click)="toast('should be less than 8 characters')"></ion-icon>
+      </div>
+
+      <div class="P-10 ttct-std-buttons">
+        <button type="submit" [disabled]="!confirmOTPForm.valid" ion-button>
+          <span [innerHTML] = "'COMMON.submit' | translate"></span>
+        </button>
+      </div>
+
+    </form>
+    <div class="ttct-center">
+      <button [disabled]= "counter > 0" class="ttct-round-button" type="submit" ion-button icon-only (click)="onResendOTPSubmit()">
+        <ion-icon class="F-32" name="ios-refresh"></ion-icon>
+      </button>
+      <div class="ttct-color-IV" [innerHTML]="'OTP.resendOTP' | translate"></div>
+      <div *ngIf="counter > 0" class="P-8 ttct-light-IV ttct-italics"><span [innerHTML]="'OTP.resendBtnDisableInfo' | translate"></span> {{counter}} <span [innerHTML]="'OTP.seconds' | translate"></span></div>
+    </div>
+</ion-content>

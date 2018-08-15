@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Register } from './register';
+import { ConfirmOTPPage } from './confirm-otp-page';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { SharedModule } from '../../app/app.shared.module';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 @NgModule({
   declarations: [
-    Register
+   ConfirmOTPPage,
   ],
   imports: [
-    IonicPageModule.forChild(Register),
-    SharedModule,
+    IonicPageModule.forChild(ConfirmOTPPage),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -24,4 +22,4 @@ export function createTranslateLoader(http: HttpClient) {
     })
   ],
 })
-export class RegisterModule {}
+export class ConfirmOTPPageModule {}

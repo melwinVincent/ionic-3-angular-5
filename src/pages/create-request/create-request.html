@@ -1,7 +1,13 @@
 <ion-content padding>
-    <form [formGroup]="requestFormGroup" class="ttct-form" (ngSubmit)="onRequestSubmit()" #requestForm="ngForm">
+    <!--ngSubmit is not used since the submit button is out of form tag-->
+    <form [formGroup]="requestFormGroup" class="ttct-form" #requestForm="ngForm">
         <!--service type-->
-        <div class="ttct-relative">
+        <!--
+            For dropdown inputs, just check whether the property is set to the object and the form is submitted.
+            Since the submit button of this form is out of the form tag (lexically), the submitted property of the form (#requestForm) is always false in this case.
+            So we can manage it using a separate variable in component (this.requestFormSubmitted)
+        -->
+        <div class="ttct-relative" [ngClass]="{'ttct-error-border': !createReqObj.service_id && requestFormSubmitted}">
             <div class="ttct-page-label" [innerHTML]="'REQUEST.serviceTypeLabel' | translate"></div>
             <div no-padding class="ttct-pseudo-button ttct-force-rtl">
                 <button  ion-button type="button" (click)="getServiceTypes()" class="ttct-service-type-button">
@@ -11,11 +17,14 @@
                 <ion-icon name="ios-arrow-down"></ion-icon>
             </div>
         </div>
+        <!--for text inputs we can rely on the old from validation methods and on submitting the form we need to check whether the property is set to the object-->
         <!--description-->
-        <div class="ttct-relative">
+        <div class="ttct-relative" [ngClass]="{'ttct-error-border': !(requestFormGroup.controls['description'].valid) && requestFormGroup.controls['description'].dirty || !(requestFormGroup.controls['description'].valid) && requestFormSubmitted}">
             <div class="ttct-page-label" [innerHTML]="'REQUEST.description' | translate"></div>
-            <ion-textarea my-input class="ttct-textarea" placeholder="{{'REQUEST.descriptionPlaceholder'| translate}}" 
-            [(ngModel)]="createReqObj.description" rows="4" name="description" formControlName="description" minlength="5" maxlength="200" ></ion-textarea>
+            <ion-item class="ttct-force-rtl">
+                <ion-textarea my-input class="ttct-textarea" placeholder="{{'REQUEST.descriptionPlaceholder'| translate}}" 
+                [(ngModel)]="createReqObj.description" rows="4" name="description" formControlName="description" minlength="5" maxlength="200" ></ion-textarea>
+            </ion-item>
         </div>
 
         <!--set date & time-->
@@ -23,20 +32,26 @@
             <div class="ttct-page-label" [innerHTML]="'REQUEST.chooseDate' | translate"></div>
             <ion-grid no-padding class="req-pseudo-btn-wrapper">
                 <ion-row class="ttct-center">
-                    <ion-col class="ttct-pseudo-btn ttct-left-btn">
+                    <ion-col class="ttct-pseudo-btn ttct-left-btn" [ngClass]="{'ttct-error-border': !createReqObj.required_date && requestFormSubmitted}">
                         <button ion-button type="button" (click)="datepicker()">
-                        {{createReqObj.required_date}}
+                            <!--ion-input is used because from validations work with ion-input in ionic-->
+                            <ion-input name="requiredDate" formControlName="requiredDate" class="ttct-center ttct-btn-label" *ngIf="createReqObj.required_date; else requiredDatePlaceholder" [(ngModel)]="createReqObj.required_date" readonly="true"></ion-input>
+                            <ng-template #requiredDatePlaceholder>
+                                <span [innerHTML]="'REQUEST.selectDate' | translate"></span>
+                            </ng-template>
                         </button>
                     </ion-col>
-                    <ion-col class="ttct-pseudo-btn ttct-right-btn">
+                    <ion-col class="ttct-pseudo-btn ttct-right-btn" [ngClass]="{'ttct-error-border': !createReqObj.time_mode && requestFormSubmitted}">
                         <button ion-button type="button" (click)="updateTimeBlock()">
-                        {{createReqObj.time_mode_display}}
+                            <ion-input name="requiredTime" formControlName="requiredTime" class="ttct-center ttct-btn-label" *ngIf="createReqObj.time_mode; else requiredTimePlaceholder" [(ngModel)]="createReqObj.time_mode_display" readonly="true"></ion-input>
+                            <ng-template #requiredTimePlaceholder>
+                                <span [innerHTML]="'REQUEST.selectTime' | translate"></span>
+                            </ng-template>
                         </button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
         </div>
-
         <!--set marker-->
         <div class="ttct-relative">
             <div class="ttct-location-wrapper">
@@ -48,18 +63,24 @@
                 </button>
             </div>
             <ion-list radio-group>
-            <ion-item>
-                <ion-label>{{'REQUEST.current' | translate}}</ion-label>
-                <ion-radio value="CURRENT" checked (ionSelect)="openMap('CURRENT')"></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>{{'REQUEST.base' | translate}}</ion-label>
-                <ion-radio value="BASE" (ionSelect)="openMap('BASE')"></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>{{'REQUEST.map' | translate}}</ion-label>
-                <ion-radio value="MAP" (ionSelect)="openMap('MAP')"></ion-radio>
-            </ion-item>
+                <ion-item *ngIf = "isUpdate; else isCreate">
+                    <ion-label>{{'REQUEST.current' | translate}}</ion-label>
+                    <ion-radio value="CURRENT" (ionSelect)="openMap('CURRENT')"></ion-radio>
+                </ion-item>
+                <ng-template #isCreate>
+                    <ion-item>
+                        <ion-label>{{'REQUEST.current' | translate}}</ion-label>
+                        <ion-radio value="CURRENT" checked="true" (ionSelect)="openMap('CURRENT')"></ion-radio>
+                    </ion-item>
+                </ng-template>
+                <ion-item>
+                    <ion-label>{{'REQUEST.base' | translate}}</ion-label>
+                    <ion-radio value="BASE" (ionSelect)="openMap('BASE')"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>{{'REQUEST.map' | translate}}</ion-label>
+                    <ion-radio value="MAP" (ionSelect)="openMap('MAP')"></ion-radio>
+                </ion-item>
             </ion-list>
         </div>
     </form>
@@ -83,8 +104,9 @@
         </button>
       </ion-col>
       <ion-col class="ttct-pseudo-btn ttct-right-btn">
-        <button type="button" (click)="submitRequest()" ion-button [disabled]="!requestForm.valid">
-          {{'REQUEST.submitRequest' | translate}}
+        <button type="button" (click)="submitRequest()" ion-button >
+          <span [hidden]="isUpdate" >{{'REQUEST.submitRequest' | translate}}</span>
+          <span [hidden]="!isUpdate" >{{'REQUEST.updateRequest' | translate}}</span>
         </button>
       </ion-col>
     </ion-row>

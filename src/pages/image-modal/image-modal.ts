@@ -9,6 +9,7 @@ import { CacheMemoryService } from '../../services/cache.memory.service';
 })
 export class ImageModal {
   items : Array<string>;
+  isReadonly : boolean;
   initialSlide : number;
    @ViewChild(Slides) slides: Slides;
   constructor(private viewController : ViewController,  private navParams : NavParams, private cacheMemoryService : CacheMemoryService) {
@@ -17,11 +18,12 @@ export class ImageModal {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ImageModal');
+    this.isReadonly = this.navParams.get('data').isReadonly;
     if (this.cacheMemoryService.get("language") === "en") {
-      this.items = this.navParams.get('data');
+      this.items = this.navParams.get('data').imgs;
       this.initialSlide = 0;
     } else {
-      this.items = this.navParams.get('data').reverse();
+      this.items = this.navParams.get('data').imgs.reverse();
       this.initialSlide = this.items.length - 1;
     }
   }

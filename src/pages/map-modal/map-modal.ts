@@ -21,12 +21,20 @@ export class MapModal {
   constructor( private viewController : ViewController, private navParams : NavParams, public geolocation: Geolocation, private memoryService : MemoryService, private cacheMemoryService : CacheMemoryService) {
     // should be set in the constructor (before the DOM is set) to access the data in DOM
     this.navData = this.navParams.get('data');
+    console.log("constructor")
 }
 
   ionViewDidLoad() {
     // this.navData = this.navParams.get('data');
     // should be called in didLoad, this method actually makes some DOM manipulation, so this should be called after load
-    this.loadMap();
+    if(this.navData.lat && this.navData.lng) {
+        this.showMap(
+          this.navData.lat, 
+          this.navData.lng
+        );
+    } else {
+      this.loadMap();
+    }
   }
 
   closeModal(isCancel) {

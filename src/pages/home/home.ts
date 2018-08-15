@@ -9,10 +9,13 @@ import { CacheMemoryService } from '../../services/cache.memory.service';
 export class HomePage {
   language : string;
   tab1Root = 'CreateRequest';
-  tab2Root = 'ViewResponses';
-  tab3Root = 'RequestHistory';
+  tab2Root = 'MyRequests';
+  reqLabel = 'Create Request';
   constructor(public navCtrl: NavController, private events: Events, private cacheMemoryService : CacheMemoryService) {
     this.language = this.cacheMemoryService.get("language");
+      events.subscribe('update:home-label', (label) => {
+        this.reqLabel = label;
+      });
   }
 
   // for publishing the events

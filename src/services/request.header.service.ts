@@ -246,7 +246,7 @@ export class RequestHeaderService {
         return new Promise((resolve, reject) => {
             // this method returns another promise
             this.setReqData().then(()=>{
-                console.log("requestHeader : ",this.requestHeader);
+                //console.log("requestHeader : ",this.requestHeader);
                 postObj.ReqHead = this.requestHeader;
                 resolve(postObj);
             },(err)=>{

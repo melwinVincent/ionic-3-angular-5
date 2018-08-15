@@ -18,7 +18,7 @@
       </ion-slide>
   </ion-slides>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="!isReadonly">
   <div class="ttct-pseudo-toolbar footer ttct-border-radius-8">
   <ion-grid no-padding>
     <ion-row>
