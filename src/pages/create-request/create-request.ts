@@ -21,20 +21,26 @@ export class CreateRequest {
   @ViewChild('requestForm') form: NgForm;
   // for displaying the loader animation
   loading : Loading;
+  // only one modal for this page
   serviceListModal : Modal;
+  // modal object
   createReqObj : CreateReqObj;
+  // for validation
   requestFormGroup: FormGroup;
+  // for the time blocks popup
   timeBlocks : any = [];
   // component variable, not used in template
   selectedMap : string = "CURRENT";
   // to manage displaying blocks in template
   isUpdate : boolean = false;
+  // to manage the disable effect of Submit button
+  isRequestFormInvalid : boolean = true;
   /*
     custom variable to manage validation in template,
     set to true on form submission and is set to false on ionViewDidLeave
   */
   requestFormSubmitted : boolean = false;
-  
+  // for camera / gallery upload
   options : CameraOptions = {
     quality: 75,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -68,35 +74,43 @@ export class CreateRequest {
         {
           service : ['', Validators.compose([
             Validators.required])],
-          requiredDate : ['', Validators.compose([
-            Validators.required])],
-          requiredTime : ['', Validators.compose([
-            Validators.required])],
           description: ['', Validators.compose([
             Validators.required,
             Validators.minLength(5),
             Validators.maxLength(200)
-            ])]
+          ])],
+          requiredDate : ['', Validators.compose([
+            Validators.required])],
+          requiredTime : ['', Validators.compose([
+            Validators.required])]
         }
       );
     }
 
     ngOnInit() {
-      // initialization
+      // initialization is always better in ngOnInit as per internet articles
       this.setReqObj(false);
+      // calls POST API for fetching service types
+      // once fecthed, resposnse is stored in memory
+      this.getServiceTypes();
+      // calls POST API for fetching time blocks
+      // once fecthed, resposnse is stored in memory
+      this.getTimeBlocks(false);
     }
 
     // always gets called on navigating to this page
     ionViewDidEnter() {
       // on update call, object is passed through the memoryService
-      // requestObj is set to {} on ionViewDidLeave
+      // requestObj in memoryService is set to {} on ionViewDidLeave
       if(this.memoryService.getData().requestObj && this.memoryService.getData().requestObj.reqData) {
+        // set the modal object with the passed object 
         this.setReqObj(this.memoryService.getData().requestObj);
         this.isUpdate = true;
+        this.isRequestFormInvalid = false;
         // to change the tab title in home page (tabs are actually in home page)
         this.events.publish('update:home-label', 'Update Request');
-        // new promise
-        this.getTimeBlocksPromise().then((data)=> {
+        // new promise, time_mode_display is passed from the other page, it's not stored in DB instead a code is saved.
+        this.getTimeBlocksPromise().then((data)=> { 
           let arr : any = data;
           this.createReqObj.time_mode_display = arr.filter(obj => {return obj.ID === this.createReqObj.time_mode})[0].Text;
         });
@@ -105,20 +119,17 @@ export class CreateRequest {
         // setReqObj function is not called on create
         this.isUpdate = false;
       }
-      // don't call if it is already set
-      if(!this.createReqObj.service_id) this.getServiceTypes();
-      // once fecthed, resposnse is stored in memory
-      this.getTimeBlocks(false); 
     }
 
     // method to set the object
-    // data is false on create and object on update
+    // data is false on create and an object on update
     setReqObj(data) {
-      // on update, selectedMap is "MAP""
+      // on update, selectedMap is "MAP", used for viewLocation function
       if(data && data.reqData && data.reqData[0] && data.reqData[0].latitude) this.selectedMap = "MAP";
 
-        let today :any = new Date();
-        today = today.getDate() + "/" + ((Number(today.getMonth()) < 9) ? '0'+(today.getMonth()+1) : today.getMonth()+1) + "/" + today.getFullYear();
+      // default today is set on required_date
+      let today :any = new Date();
+      today = today.getDate() + "/" + ((Number(today.getMonth()) < 9) ? '0'+(today.getMonth()+1) : today.getMonth()+1) + "/" + today.getFullYear();
       
       this.createReqObj = {
         service_request_id : data && data.reqData ? data.reqData[0].service_request_id : "",
@@ -136,7 +147,7 @@ export class CreateRequest {
       }
 
     }
-
+    // called on didLeave
     resetMemory() {
       this.memoryService.updateLocalMemory('parentItemID', "");
       this.memoryService.updateLocalMemory('selectedItemID', "");
@@ -154,8 +165,15 @@ export class CreateRequest {
     hideLoading() {
         if(this.loading) this.loading.dismiss()
     }
+
+    // for toasting
+    toast(msg:string) {
+      this.events.publish('toast', msg);
+    }
+
     // on clicking the view location block in template
     viewLocation(){
+
       if (this.selectedMap === "CURRENT") {
         this.presentServiceListModal('MapModal', {isDraggable:false});
       } else if (this.selectedMap === "BASE") {
@@ -250,16 +268,12 @@ export class CreateRequest {
 
     /************* end of codes related to images *************/
 
+    // called from template
     openMap(val) {
       this.selectedMap = val;
       if(val === "MAP"){
         this.presentServiceListModal('MapModal', {isDraggable:true});
       }
-    }
-
-    // for toasting
-    toast(msg:string) {
-      this.events.publish('toast', msg);
     }
 
     getServiceTypes() {
@@ -308,25 +322,45 @@ export class CreateRequest {
     }
     // called from template to display the alert popup for selecting timeblocks
     updateTimeBlock() {
- 
+      // if required_date is not set, then return throwing a toast
+      if(!this.createReqObj.required_date) {
+        this.toast("Please select the required date first");
+        return;
+      }
+
+      let timeBlocks;
+      let today :any = new Date();
+      today = today.getDate() + "/" + ((Number(today.getMonth()) < 9) ? '0'+(today.getMonth()+1) : today.getMonth()+1) + "/" + today.getFullYear();
+      // check if the required_date is set today, then show the timeBlocks accordingly (don't show past time blocks)
+      if(this.createReqObj.required_date === today) {
+        let hour = new Date().getHours();
+        let index = Math.floor(hour/APP_CONFIG.reqBlockInteval);
+        timeBlocks = this.timeBlocks.slice(index);
+      } else {
+        timeBlocks = this.timeBlocks;
+      }
+      
       let prompt = this.alertCtrl.create({
         subTitle: 'Choose the time block',
-        inputs : this.setInputArr(this.timeBlocks),
+        inputs : this.setInputArr(timeBlocks),
         buttons : [{
             text: "OK",
             handler: data => {
-              this.createReqObj.time_mode = data;
-              this.createReqObj.time_mode_display = this.timeBlocks.filter(obj => {return obj.ID === data})[0].Text;
+              if(data) {
+                this.createReqObj.time_mode = data;
+                this.createReqObj.time_mode_display = this.timeBlocks.filter(obj => {return obj.ID === data})[0].Text;
+                // ngDoCheckPseudo to be called on force, refer the function 
+                this.ngDoCheckPseudo();
+              }
             }
         }]
       });
       prompt.present();
     }
 
-    // same method is used for resolving a promise
+    // same method is used for resolving a promise to set the time_mode_display on updating the request 
     getTimeBlocks(resolveGetTimeBlocks) {
       if (this.memoryService.getData()['timeBlocks']) {
-          console.log("memory") 
           this.timeBlocks = this.memoryService.getData()['timeBlocks'];
           if(resolveGetTimeBlocks) resolveGetTimeBlocks(this.timeBlocks);
           //this.setTimeBlock();
@@ -355,6 +389,7 @@ export class CreateRequest {
         });
       }
     }
+
     // promise used to set the time_mode_display for update
     getTimeBlocksPromise = () => {
       return new Promise((resolveGetTimeBlocks, rejectGetTimeBlocks) => {
@@ -362,18 +397,7 @@ export class CreateRequest {
       });
     }
 
-    /*
-    setTimeBlock() {
-      if(!this.createReqObj.time_mode) {
-        let hour = new Date().getHours();
-        let index = Math.floor(hour/APP_CONFIG.reqBlockInteval);
-        this.createReqObj.time_mode = this.timeBlocks[(index+1)].ID;
-        this.createReqObj.time_mode_display = this.timeBlocks[(index+1)].Text;
-      }
-    }
-    */
-
-    // same function used for showing modals in this page
+    // same function used for showing all the modals in this page
     presentServiceListModal(modal, data) {
       this.serviceListModal = this.modalCtrl.create(modal, {data: data});
       this.serviceListModal.onDidDismiss(res => {
@@ -383,6 +407,8 @@ export class CreateRequest {
               if(res.service_id) {
                 this.createReqObj.service_id = res.service_id;
                 this.createReqObj.service_name = res.service_name;
+                // ngDoCheckPseudo to be called on force, refer the function        
+                this.ngDoCheckPseudo();
               }
               break;
             }
@@ -401,6 +427,10 @@ export class CreateRequest {
               //this.hideLoading();
               break;
             }
+            case 'CONFIRM' : {
+              if(res.isSubmit) this.reqSubmit();
+              break;
+            }
             
           }
 
@@ -409,14 +439,14 @@ export class CreateRequest {
       this.serviceListModal.present();
     }
 
-    // to format to dd/mm/yyyy
+    // to format into dd/mm/yyyy
     formatDate(dateString) {
       console.log(dateString);
       let arr = dateString.split("/");
       let formattedDate = arr[1]+"/"+arr[0]+"/"+arr[2];
       return new Date(formattedDate);
     }
-
+    // called from template
     datepicker() {
       this.datePicker.show({
         date: new Date(this.formatDate(this.createReqObj.required_date)),
@@ -436,7 +466,7 @@ export class CreateRequest {
     }
 
 
-    // post api call
+    // POST API call , called from below function
     reqSubmit() {
       /*
         In this project we need to set requestHeader object as a property to the postObj.
@@ -449,7 +479,7 @@ export class CreateRequest {
             return filtered
           }, []);
         }
-
+        //format to mm/dd/yyyy before POST API call
         let formatDateString = (dataStr) => {
           let splitArr = dataStr.split('/');
           return splitArr[1]+'/'+splitArr[0]+'/'+splitArr[2];
@@ -471,6 +501,7 @@ export class CreateRequest {
             },
             ImageList: formatImageArr(this.createReqObj.image),
       }
+
       this.createRequestService.setPostData(postObj).then(()=>{
         // the api is called only after the setPostData promise is resolved 
         this.createRequestService.customPsuedoSubscribe('createRequestObservable').subscribe((data)=>{
@@ -481,8 +512,10 @@ export class CreateRequest {
               setTimeout(() => {
                 // go to my-requests tab
                 this.navCtrl.parent.select(1);
-                //this.setReqObj(false);
-                //this.resetMemory();
+                /*
+                  this.setReqObj(false);
+                  this.resetMemory();
+                */
               }, 250); // for better UX
           } else {
             this.toast(data[0].StatusDesc);
@@ -501,25 +534,41 @@ export class CreateRequest {
 
     }
 
+    // on clicking the submitRequest button in footer
     submitRequest() {
-      
-      // return if validation fails
-      if(!this.requestFormGroup.valid) {
-        // updating the custom variable to true on invalid submit
-         this.requestFormSubmitted = true;
-        if(!this.createReqObj.service_id) {
-          this.toast("Please select a service");
-        } else if (!this.createReqObj.description) {
-           this.toast("Please enter a short description");
-        } else if (!this.createReqObj.required_date) {
-          this.toast("Please select a date");
-        } else if (!this.createReqObj.time_mode) {
-          this.toast("Please select a time");
-        } 
 
-        return;
+      /****************** CUSTOM VALIDATION LOGIC starts ******************/
+
+      // return from the fuction if validation fails
+      
+      if(!this.requestFormGroup.valid) {
+          // updating the custom variable to true on invalid submit
+          this.requestFormSubmitted = true;
+          let formGroupControls = this.requestFormGroup.controls;
+          if(formGroupControls.service.errors) {
+            // only required
+            this.toast("Please select a service");
+          } else if (formGroupControls.description.errors) {
+              // 3 validations for description
+              let errors = formGroupControls.description.errors;
+              if (errors.required) {
+                this.toast("Please enter a short description");
+              } else if (errors.minlength) {
+                this.toast("Please enter minimum 5 characters");
+              } else if (errors.maxlength) {
+                this.toast("Description is limited to 200 characters");
+              }
+          } else if (formGroupControls.requiredDate.errors) {
+            this.toast("Please select a date");
+          } else if (formGroupControls.requiredTime.errors) {
+            this.toast("Please select a time");
+          } 
+
+          return;
         
       } 
+
+       /****************** CUSTOM VALIDATION LOGIC ends ******************/
 
       if(this.selectedMap === "CURRENT") {
         this.geolocation.getCurrentPosition().then((position) => {
@@ -530,8 +579,9 @@ export class CreateRequest {
         this.createReqObj.latitude = this.cacheMemoryService.getJSON('loginResponse').latitude.toString();
         this.createReqObj.longitude = this.cacheMemoryService.getJSON('loginResponse').longitude.toString();
       }
-      // call POST API
-      this.reqSubmit();
+
+      // confirm popup
+      this.presentServiceListModal('ConfirmRequest', {req : this.createReqObj});
     }
 
     ionViewWillLeave() {
@@ -545,7 +595,7 @@ export class CreateRequest {
       if(this.memoryService.getData().requestObj && this.memoryService.getData().requestObj.reqData) this.memoryService.updateLocalMemory('requestObj', {});
       // change label on homepage
       this.events.publish('update:home-label', 'Create Request');
-      // reset the form
+      // reset the form, take care not to clear the requiredDate
       this.form.resetForm({ 
         "requiredDate" : this.createReqObj.required_date 
       });
@@ -553,6 +603,22 @@ export class CreateRequest {
       this.resetMemory();
       // reset the custom variable used for verifying form submission
       this.requestFormSubmitted = false;
+    }
+
+    /*
+      Quick fix for ExpressionChangedAfterItHasBeenCheckedError
+      This function gets called manually if we make any change to the form inputs (as per our framework)
+    */
+    ngDoCheckPseudo() {
+      /*
+        timeout is necessary here. 
+        let the angular finish its change detection process and assign proper value on to the 'invalid' property of requestFormGroup
+        100ms is a safe delay in this case
+      */
+      setTimeout(() => {
+        this.isRequestFormInvalid = this.requestFormGroup.invalid;
+      }, 100);
+
     }
 
 }

@@ -22,7 +22,7 @@
         <div class="ttct-relative" [ngClass]="{'ttct-error-border': !(requestFormGroup.controls['description'].valid) && requestFormGroup.controls['description'].dirty || !(requestFormGroup.controls['description'].valid) && requestFormSubmitted}">
             <div class="ttct-page-label" [innerHTML]="'REQUEST.description' | translate"></div>
             <ion-item class="ttct-force-rtl">
-                <ion-textarea my-input class="ttct-textarea" placeholder="{{'REQUEST.descriptionPlaceholder'| translate}}" 
+                <ion-textarea my-input (ionChange)="ngDoCheckPseudo()" class="ttct-textarea" placeholder="{{'REQUEST.descriptionPlaceholder'| translate}}" 
                 [(ngModel)]="createReqObj.description" rows="4" name="description" formControlName="description" minlength="5" maxlength="200" ></ion-textarea>
             </ion-item>
         </div>
@@ -87,7 +87,7 @@
     <div class="PTB-8" *ngIf="createReqObj.image.length > 0">
         <div no-padding class="ttct-pseudo-button">
             <button  ion-button type="button" (click)="showImages()" class="ttct-service-type-button">
-                <div class="ttct-btn-label"  [innerHTML]="'REQUEST.showImages' | translate"></div>
+                <div class="ttct-btn-label" ><span [innerHTML]="'REQUEST.showImages' | translate"></span> &nbsp; ({{createReqObj.image.length}})</div>
             </button>
             <ion-icon class="ttct-view-icon" name="ios-eye"></ion-icon>
         </div>
@@ -100,11 +100,11 @@
     <ion-row>
       <ion-col class="ttct-pseudo-btn ttct-left-btn">
         <button ion-button type="button" (click)="presentImgActionSheet()">
-          {{'REQUEST.attachImg' | translate}}
+          {{'REQUEST.attachImg' | translate}} <span [hidden]="createReqObj.image.length === 0"> &nbsp; ({{createReqObj.image.length}})</span>
         </button>
       </ion-col>
       <ion-col class="ttct-pseudo-btn ttct-right-btn">
-        <button type="button" (click)="submitRequest()" ion-button >
+        <button type="button" (click)="submitRequest(requestFormGroup)" [ngClass]="{'ttct-pseudo-disabled-button' : isRequestFormInvalid}" ion-button >
           <span [hidden]="isUpdate" >{{'REQUEST.submitRequest' | translate}}</span>
           <span [hidden]="!isUpdate" >{{'REQUEST.updateRequest' | translate}}</span>
         </button>

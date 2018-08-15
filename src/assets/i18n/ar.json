@@ -55,7 +55,8 @@
     "regLoc" : "Your Registered Location AR",
     "updateRequest" : "Update Request AR",
     "selectDate" : "SELECT DATE AR",
-    "selectTime" : "SELECT TIME AR"
+    "selectTime" : "SELECT TIME AR",
+    "confirm" : "Confirm AR"
   },
   "MY_REQUEST" : {
     "clickLabel" : "Click the arrow to manage your requestAR",

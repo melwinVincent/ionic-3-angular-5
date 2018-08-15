@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ConfirmOTPPage } from './confirm-otp-page';
+import { ForgotPassword } from './forgot-password';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
@@ -9,10 +9,10 @@ export function createTranslateLoader(http: HttpClient) {
 }
 @NgModule({
   declarations: [
-   ConfirmOTPPage,
+    ForgotPassword,
   ],
   imports: [
-    IonicPageModule.forChild(ConfirmOTPPage),
+    IonicPageModule.forChild(ForgotPassword),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -22,4 +22,4 @@ export function createTranslateLoader(http: HttpClient) {
     })
   ],
 })
-export class ConfirmOTPPageModule {}
+export class ForgotPasswordModule {}

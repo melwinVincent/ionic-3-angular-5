@@ -1,7 +1,7 @@
 {
   "HELLO": "hello",
   "COMMON" : {
-    "submit" : "Submit",
+    "submit" : "SUBMIT",
     "changeLanguage" : "Click to change the language",
     "username" : "Username",
     "password" : "Password",
@@ -40,7 +40,7 @@
     "defaultLocation":"Default is set to current location",
     "viewLocation":"Click here to view the selected location in map",
     "current": "Current Location",
-    "base": "Registered Location",
+    "base": "My Profile Location",
     "map": "Choose a different location from Map",
     "selectService": "Select the type of Service",
     "dragMarker": "Drag the marker to set the location",
@@ -55,7 +55,8 @@
     "regLoc" : "Your Registered Location",
     "updateRequest" : "Update Request",
     "selectDate" : "SELECT DATE",
-    "selectTime" : "SELECT TIME"
+    "selectTime" : "SELECT TIME",
+    "confirm" : "Confirm"
   },
   "MY_REQUEST" : {
     "clickLabel" : "Click the arrow to manage your request",
